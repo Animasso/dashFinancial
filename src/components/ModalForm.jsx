@@ -1,15 +1,12 @@
 import Modal from "react-modal";
-import { Props } from "./types/types";
 import { useState } from "react";
 import { IoMdCloseCircle } from "react-icons/io";
 import { motion } from "framer-motion";
-
 Modal.setAppElement("#root");
-
 const ModalForm = ({ isOpen, onClose, addTransaction }) => {
   const [amount, setAmount] = useState("");
   const [category, setCategory] = useState("");
-  const [type, setType] = (useState < "income") | ("expense" > "income");
+  const [type, setType] = useState("income");
 
   const handleAmountChange = (e) => {
     const value = e.target.value;
@@ -25,12 +22,13 @@ const ModalForm = ({ isOpen, onClose, addTransaction }) => {
       return;
     }
 
-    addTransaction({ amount: Number(amount), category, type });
+    addTransaction(amount, category, type);
     setAmount("");
     setCategory("");
     setType("income");
     onClose();
   };
+
   return (
     <Modal
       isOpen={isOpen}
@@ -94,7 +92,7 @@ const ModalForm = ({ isOpen, onClose, addTransaction }) => {
           <div>
             <label>Category :</label>
             <select
-              value={category || ""}
+              value={category}
               onChange={(e) => setCategory(e.target.value)}
               required
               className="ml-2 mb-3"
